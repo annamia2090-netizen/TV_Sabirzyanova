@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using TV_Sabirzyanova;
 
 namespace TV_Sabirzyanova.Classes
 {
@@ -34,19 +35,19 @@ namespace TV_Sabirzyanova.Classes
         { 
             Channels.Add(new Channel()
         { 
-            Name = "Практическое занятие No3 Объявление классов и создание объектов в C#.mp4",
-            Src = @"C:\Users\aooshchepkov\Downloads\1.mp4"
-        });
+            Name = "шапка.mp4",
+            Src = "Video/шапка.mp4"
+            });
             Channels.Add(new Channel()
         {
-            Name = "Практическое занятие No4 Использование методов в ООП Разница между простыми и статическими методами.mp4",
-            Src = @"C:\Users\aooshchepkov\Downloads\2.mp4"
-        });
+            Name = "китя.mp4",
+            Src = "Video/китя.mp4"
+            });
             Channels.Add(new Channel()
         {
-            Name = "Практическое задание No5 Конструкторы в ООП.mp4",
-            Src = @"C:\Users\aooshchepkov\Downloads\3.mp4"
-        });
+            Name = "китя2.mp4",
+            Src = "Video/китя2.mp4"
+            });
     }
         public void SwapChanell(MediaElement _MediaElement, Label _NameChannel)
         {
@@ -56,7 +57,7 @@ namespace TV_Sabirzyanova.Classes
             StartAnimation.Duration = TimeSpan.FromSeconds(0.6);
             StartAnimation.Completed += delegate
             {
-                _MediaElement.Source = new Uri(this.Channels[this.ActiveChannel].Src);
+                _MediaElement.Source = new Uri(this.Channels[this.ActiveChannel].Src, UriKind.Relative);
                 _MediaElement.Play();
                 DoubleAnimation EndAnimation = new DoubleAnimation();
                 EndAnimation.From = 0;
@@ -70,11 +71,13 @@ namespace TV_Sabirzyanova.Classes
 
         public void NextChannel(MediaElement _MediaElement, Label _NameChannel)
         {
+            if (!isTurnedOn) return;
             ActiveChannel++;
             SwapChanell(_MediaElement, _NameChannel);
         }
         public void BackChannel(MediaElement _MediaElement, Label _NameChannel)
         {
+            if (!isTurnedOn) return; 
             ActiveChannel--;
             SwapChanell(_MediaElement, _NameChannel);
         }
@@ -83,6 +86,20 @@ namespace TV_Sabirzyanova.Classes
         }
         public void DownSound()
         {
+        }
+        private bool isTurnedOn = true;
+        public bool IsTurnedOn
+        {
+            get { return isTurnedOn; }
+            set { isTurnedOn = value; }
+        }
+        public void SelectChannelByIndex(int index, System.Windows.Controls.MediaElement VideoPlayer, System.Windows.Controls.Label NameCHannel)
+        {
+            if (isTurnedOn && index >= 0 && index < Channels.Count)
+            {
+                ActiveChannel = index;
+                SwapChanell(VideoPlayer, NameCHannel);
+            }
         }
     }
 }

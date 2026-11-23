@@ -43,6 +43,16 @@
                 Height="25"
                 Background="White"/>
             <Button
+                Click="PowerToggle"
+                Content="Вкл/Выкл"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Margin="467,0,0,10"
+                Width="100"
+                Height="25"
+                Background= "Red"
+                FontWeight="Bold"/>
+            <Button
                 Content="Тише"
                 HorizontalAlignment="Right"
                 Margin="0,0,115, 10"
@@ -58,6 +68,8 @@
                 Width="100"
                 Height="25"
                 Background= "White"/>
+            <Button Click="SelectChannel1" Content="Канал 1" FontSize="10" Background="White" Margin="240,20,505,15"/>
+            <Button Click="SelectChannel2" Content="Канал 2" FontSize="10" Background="White" Margin="314,20,426,15"/>
         </Grid>
     </Grid>
 </Window>

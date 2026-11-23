@@ -24,8 +24,10 @@ namespace TV_Sabirzyanova
         public MainWindow()
         {
             InitializeComponent();
-            VideoPlayer.Source= new Uri(TV.Channels[TV.ActiveChannel].Src);
+            VideoPlayer.Source = new Uri(TV.Channels[TV.ActiveChannel].Src, UriKind.Relative);
             VideoPlayer.Play();
+            VideoPlayer.MediaFailed += (s, args) => MessageBox.Show(args.ErrorException.Message);
+
         }
 
         private void BackChannel(object sender, RoutedEventArgs e)
@@ -36,6 +38,33 @@ namespace TV_Sabirzyanova
         private void NextChannel(object sender, RoutedEventArgs e)
         {
             TV.NextChannel(VideoPlayer, NameChannel);
+        }
+
+        private void SelectChannel1(object sender, RoutedEventArgs e)
+        {
+            TV.SelectChannelByIndex(0, VideoPlayer, NameChannel);
+        }
+
+        private void SelectChannel2(object sender, RoutedEventArgs e)
+        {
+            TV.SelectChannelByIndex(1, VideoPlayer, NameChannel);
+        }
+
+        private void PowerToggle(object sender, RoutedEventArgs e)
+        {
+            TV.IsTurnedOn = !TV.IsTurnedOn;
+            if (TV.IsTurnedOn)
+            {
+                VideoPlayer.Visibility = Visibility.Visible;
+                VideoPlayer.Play();
+                NameChannel.Content = TV.Channels[TV.ActiveChannel].Name;
+            }
+            else
+            {
+                VideoPlayer.Stop();
+                VideoPlayer.Visibility = Visibility.Hidden;
+                NameChannel.Content = "Телевизор выключен";
+            }
         }
     }
 }
